@@ -5,828 +5,299 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CEUTESIM</title>
   <link rel="icon" type="image/png" href="Logo.png">
-
-  <!-- ══ SEGURIDAD: Meta HTTP headers ══ -->
-  <!-- Evita que la página sea embebida en un iframe (clickjacking) -->
   <meta http-equiv="X-Frame-Options" content="DENY">
-  <!-- Evita que el navegador adivine el tipo de contenido (MIME sniffing) -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <!-- Controla qué información se envía en el header Referer -->
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-  <!-- Fuerza HTTPS en el navegador por 1 año -->
   <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
-  <!-- Política de permisos: desactiva funciones que no se usan -->
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
-  <!-- Content Security Policy: solo permite recursos del propio dominio + Google Fonts -->
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src  'self';
-    style-src   'self' https://fonts.googleapis.com 'unsafe-inline';
-    font-src    'self' https://fonts.gstatic.com;
-    img-src     'self' data:;
-    connect-src 'self';
-    frame-src   'none';
-    object-src  'none';
-    base-uri    'self';
-    form-action 'self';
-  ">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ════════════════════════════════════════
-     HEADER
-════════════════════════════════════════ -->
+<!-- HEADER -->
 <header class="header" id="header">
   <div class="container">
     <div class="header-inner">
-
       <a href="#inicio" class="brand-link">
         <img src="LOGO.svg" alt="Logo CEUTESIM" class="logo">
         <div>
           <span class="brand-name">CEUTESIM</span>
-          <span class="brand-subtitle">Centro Estudiantil<br>Unificación Tecnicatura Superior Islas Malvinas</span>
+          <span class="brand-subtitle">Centro Estudiantil<br>Unificacion Tecnicatura Superior Islas Malvinas</span>
         </div>
       </a>
-
       <nav class="nav" id="nav">
         <a href="#inicio">Inicio</a>
         <div class="dropdown">
-          <a href="#carreras" class="dropdown-toggle">Carreras</a>
-          <div class="dropdown-content">
+          <a href="#carreras" class="dropdown-toggle" id="dropdown-btn">Carreras
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <div class="dropdown-content" id="dropdown-content">
             <a href="#plan-hys">Higiene y Seguridad</a>
-            <a href="#plan-logistica">Logística</a>
-            <a href="#plan-mecatronica">Mecatrónica</a>
+            <a href="#plan-logistica">Logistica</a>
+            <a href="#plan-mecatronica">Mecatronica</a>
           </div>
         </div>
         <a href="#biblioteca">Biblioteca</a>
         <a href="#equipo">Equipo</a>
         <a href="#soporte">Soporte</a>
       </nav>
-
-      <div class="menu-toggle" id="menu-toggle">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu" aria-expanded="false">
         <span></span><span></span><span></span>
-      </div>
-
+      </button>
     </div>
   </div>
 </header>
 
+<!-- SIDEBAR MOBILE -->
+<div class="mob-backdrop" id="mob-backdrop"></div>
+<nav class="sidebar" id="sidebar" aria-hidden="true">
+  <div class="sidebar-indicator" id="sidebar-indicator"></div>
+  <ul class="sidebar-list" id="sidebar-list">
+    <li class="sidebar-item active" data-index="0">
+      <a href="#inicio" class="sidebar-link">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <span class="sidebar-label">Inicio</span>
+      </a>
+    </li>
+    <li class="sidebar-item has-sub" data-index="1">
+      <button class="sidebar-link sidebar-link-btn" id="sb-carreras-btn">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+        <span class="sidebar-label">Carreras</span>
+        <svg class="sb-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <ul class="sidebar-sub" id="sb-carreras-sub">
+        <li><a href="#plan-hys">Higiene y Seguridad</a></li>
+        <li><a href="#plan-logistica">Logistica</a></li>
+        <li><a href="#plan-mecatronica">Mecatronica</a></li>
+      </ul>
+    </li>
+    <li class="sidebar-item" data-index="2">
+      <a href="#biblioteca" class="sidebar-link">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <span class="sidebar-label">Biblioteca</span>
+      </a>
+    </li>
+    <li class="sidebar-item" data-index="3">
+      <a href="#equipo" class="sidebar-link">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <span class="sidebar-label">Equipo</span>
+      </a>
+    </li>
+    <li class="sidebar-item" data-index="4">
+      <a href="#soporte" class="sidebar-link">
+        <span class="sidebar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <span class="sidebar-label">Soporte</span>
+      </a>
+    </li>
+  </ul>
+  <button class="sidebar-close" id="sidebar-close" aria-label="Cerrar menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</nav>
 
-<!-- ════════════════════════════════════════
-     INICIO / HERO
-════════════════════════════════════════ -->
+<!-- HERO -->
 <section id="inicio">
   <div class="hero-inner">
     <p class="hero-eyebrow">CEUTESIM 2026</p>
     <h1 class="hero-title">Tu voz,<br>tu <em>centro</em></h1>
-    <p class="hero-subtitle">Representamos a los estudiantes de las Tecnicaturas Superiores Islas Malvinas.
-      Organizamos, gestionamos y te acompañamos.</p>
-    <a href="#carreras" class="hero-cta">
-      Explorar carreras
-      <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-    </a>
+    <p class="hero-subtitle">Representamos a los estudiantes de las Tecnicaturas Superiores Islas Malvinas. Organizamos, gestionamos y te acompanamos.</p>
+    <a href="#carreras" class="hero-cta">Explorar carreras <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
   </div>
-  <div class="hero-scroll">
-    <span>Scroll</span>
-    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-  </div>
+  <div class="hero-scroll"><span>Scroll</span><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     CARRERAS (resumen)
-════════════════════════════════════════ -->
+<!-- CARRERAS -->
 <section id="carreras" class="reveal">
   <div class="container">
     <p class="section-label">Oferta educativa</p>
     <h2 class="section-title">Nuestras <span>Carreras</span></h2>
-
     <div class="grid-carreras">
-
       <div class="carrera-card hys">
-        <div class="carrera-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
+        <div class="carrera-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <h3>Higiene y Seguridad</h3>
-        <p>Prevención, gestión y control de riesgos laborales con orientación en la industria de la construcción.</p>
-        <a href="#plan-hys" class="carrera-link">
-          Ver plan de estudios
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </a>
+        <p>Prevencion, gestion y control de riesgos laborales con orientacion en la industria de la construccion.</p>
+        <a href="#plan-hys" class="carrera-link">Ver plan de estudios <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
       </div>
-
       <div class="carrera-card log">
-        <div class="carrera-icon">
-          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <h3>Logística</h3>
-        <p>Planificación, gestión y control de cadenas de suministro y distribución a nivel nacional e internacional.</p>
-        <a href="#plan-logistica" class="carrera-link">
-          Ver plan de estudios
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </a>
+        <div class="carrera-icon"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <h3>Logistica</h3>
+        <p>Planificacion, gestion y control de cadenas de suministro y distribucion a nivel nacional e internacional.</p>
+        <a href="#plan-logistica" class="carrera-link">Ver plan de estudios <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
       </div>
-
       <div class="carrera-card mec">
-        <div class="carrera-icon">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg>
-        </div>
-        <h3>Mecatrónica</h3>
-        <p>Sistemas integrados de mecánica, electrónica, programación, automatización y robótica industrial.</p>
-        <a href="#plan-mecatronica" class="carrera-link">
-          Ver plan de estudios
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </a>
+        <div class="carrera-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg></div>
+        <h3>Mecatronica</h3>
+        <p>Sistemas integrados de mecanica, electronica, programacion, automatizacion y robotica industrial.</p>
+        <a href="#plan-mecatronica" class="carrera-link">Ver plan de estudios <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></a>
       </div>
-
     </div>
   </div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     PLAN — HIGIENE Y SEGURIDAD
-════════════════════════════════════════ -->
+<!-- PLAN HYS -->
 <section id="plan-hys" class="plan-section">
-
-  <div class="plan-hero hero-hys">
-    <div class="plan-hero-inner">
-      <p class="plan-breadcrumb">Carreras &rsaquo; <span>Higiene y Seguridad</span></p>
-      <h2 class="plan-hero-title">Tecnicatura Superior en<br>Higiene y Seguridad en el Trabajo</h2>
-      <p class="plan-hero-subtitle">Orientación en la Industria de la Construcción. Formación profesional para la prevención, gestión y control de riesgos laborales.</p>
-      <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 años</div>
-    </div>
-  </div>
-
+  <div class="plan-hero hero-hys"><div class="plan-hero-inner">
+    <p class="plan-breadcrumb">Carreras &rsaquo; <span>Higiene y Seguridad</span></p>
+    <h2 class="plan-hero-title">Tecnicatura Superior en<br>Higiene y Seguridad en el Trabajo</h2>
+    <p class="plan-hero-subtitle">Orientacion en la Industria de la Construccion. Formacion profesional para la prevencion, gestion y control de riesgos laborales.</p>
+    <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 anos</div>
+  </div></div>
   <div class="plan-stats">
-    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Años</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Anos</div></div>
     <div class="plan-stat"><div class="plan-stat-num">6</div><div class="plan-stat-label">Cuatrimestres</div></div>
     <div class="plan-stat"><div class="plan-stat-num">29</div><div class="plan-stat-label">Materias</div></div>
-    <div class="plan-stat"><div class="plan-stat-num">2</div><div class="plan-stat-label">Prácticas profesionales</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">2</div><div class="plan-stat-label">Practicas</div></div>
   </div>
-
-  <div class="plan-body">
-    <div class="plan-body-inner">
-
-      <div class="plan-leyenda">
-        <span class="plan-leyenda-label">Referencia</span>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div>
-      </div>
-
-      <div class="plan-progress-track">
-
-        <!-- Año 1 -->
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header">
-            <span class="plan-year-badge">Año 1</span>
-            <h3 class="plan-year-title">Primer Año</h3>
-            <div class="plan-year-line"></div>
-          </div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">5 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Dibujo Técnico</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Introducción a la Gestión</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Introducción a la Legislación</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Lenguaje y Comunicación</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Organización de la Seguridad</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Física Aplicada al Trabajo</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Introducción a la Construcción</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Química Aplicada a los Ambientes de Trabajo</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Tecnología Informática</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Higiene y Seguridad I</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Año 2 -->
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header">
-            <span class="plan-year-badge">Año 2</span>
-            <h3 class="plan-year-title">Segundo Año</h3>
-            <div class="plan-year-line"></div>
-          </div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">5 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Administración del Personal</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Dibujo Técnico Asistido por Computadora</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Inglés Técnico</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Organización y Normativa</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Seguridad Social</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">5 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Aspectos Higiénicos y Ambientales</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Medicina Laboral y Primeros Auxilios</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesional I</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Prevención en Instalaciones Especiales</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Servicios de Infraestructura</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Higiene y Seguridad II</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Año 3 -->
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header">
-            <span class="plan-year-badge">Año 3</span>
-            <h3 class="plan-year-title">Tercer Año</h3>
-            <div class="plan-year-line"></div>
-          </div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Acciones Seguras en el Trabajo</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Aspectos Preventivos</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Lenguaje y Comunicación Técnica</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Prevención Contra Incendios</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
-                <div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Dinámica Interpersonal</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Ética y Deontología Profesional</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Legislación Laboral</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Proyecto Final</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header">
-                <div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div>
-                <div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div>
-              </div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesional II</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- /progress-track -->
+  <div class="plan-body"><div class="plan-body-inner">
+    <div class="plan-leyenda">
+      <span class="plan-leyenda-label">Referencia</span>
+      <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1. Cuatrimestre</div>
+      <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2. Cuatrimestre</div>
+      <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div>
     </div>
-  </div>
+    <div class="plan-progress-track">
+      <div class="plan-year" data-scroll-reveal>
+        <div class="plan-year-dot"></div>
+        <div class="plan-year-header"><span class="plan-year-badge">Ano 1</span><h3 class="plan-year-title">Primer Ano</h3><div class="plan-year-line"></div></div>
+        <div class="plan-grid">
+          <div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">5 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Dibujo Tecnico</li><li class="plan-materia-item"><span class="plan-dot"></span>Introduccion a la Gestion</li><li class="plan-materia-item"><span class="plan-dot"></span>Introduccion a la Legislacion</li><li class="plan-materia-item"><span class="plan-dot"></span>Lenguaje y Comunicacion</li><li class="plan-materia-item"><span class="plan-dot"></span>Organizacion de la Seguridad</li></ul></div>
+          <div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Fisica Aplicada al Trabajo</li><li class="plan-materia-item"><span class="plan-dot"></span>Introduccion a la Construccion</li><li class="plan-materia-item"><span class="plan-dot"></span>Quimica Aplicada a los Ambientes de Trabajo</li><li class="plan-materia-item"><span class="plan-dot"></span>Tecnologia Informatica</li></ul></div>
+          <div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Higiene y Seguridad I</li></ul></div>
+        </div>
+      </div>
+      <div class="plan-year" data-scroll-reveal>
+        <div class="plan-year-dot"></div>
+        <div class="plan-year-header"><span class="plan-year-badge">Ano 2</span><h3 class="plan-year-title">Segundo Ano</h3><div class="plan-year-line"></div></div>
+        <div class="plan-grid">
+          <div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">5 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Administracion del Personal</li><li class="plan-materia-item"><span class="plan-dot"></span>Dibujo Tecnico Asistido por Computadora</li><li class="plan-materia-item"><span class="plan-dot"></span>Ingles Tecnico</li><li class="plan-materia-item"><span class="plan-dot"></span>Organizacion y Normativa</li><li class="plan-materia-item"><span class="plan-dot"></span>Seguridad Social</li></ul></div>
+          <div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">5 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Aspectos Higienicos y Ambientales</li><li class="plan-materia-item"><span class="plan-dot"></span>Medicina Laboral y Primeros Auxilios</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesional I</li><li class="plan-materia-item"><span class="plan-dot"></span>Prevencion en Instalaciones Especiales</li><li class="plan-materia-item"><span class="plan-dot"></span>Servicios de Infraestructura</li></ul></div>
+          <div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Higiene y Seguridad II</li></ul></div>
+        </div>
+      </div>
+      <div class="plan-year" data-scroll-reveal>
+        <div class="plan-year-dot"></div>
+        <div class="plan-year-header"><span class="plan-year-badge">Ano 3</span><h3 class="plan-year-title">Tercer Ano</h3><div class="plan-year-line"></div></div>
+        <div class="plan-grid">
+          <div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Acciones Seguras en el Trabajo</li><li class="plan-materia-item"><span class="plan-dot"></span>Aspectos Preventivos</li><li class="plan-materia-item"><span class="plan-dot"></span>Lenguaje y Comunicacion Tecnica</li><li class="plan-materia-item"><span class="plan-dot"></span>Prevencion Contra Incendios</li></ul></div>
+          <div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Dinamica Interpersonal</li><li class="plan-materia-item"><span class="plan-dot"></span>Etica y Deontologia Profesional</li><li class="plan-materia-item"><span class="plan-dot"></span>Legislacion Laboral</li><li class="plan-materia-item"><span class="plan-dot"></span>Proyecto Final</li></ul></div>
+          <div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">1 materia</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesional II</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div></div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     PLAN — LOGÍSTICA
-════════════════════════════════════════ -->
+<!-- PLAN LOGISTICA -->
 <section id="plan-logistica" class="plan-section">
-
-  <div class="plan-hero hero-logistica">
-    <div class="plan-hero-inner">
-      <p class="plan-breadcrumb">Carreras &rsaquo; <span>Logística</span></p>
-      <h2 class="plan-hero-title">Tecnicatura Superior<br>en Logística</h2>
-      <p class="plan-hero-subtitle">Formación técnico-profesional para la planificación, gestión y control de cadenas de suministro y distribución.</p>
-      <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 años</div>
-    </div>
-  </div>
-
+  <div class="plan-hero hero-logistica"><div class="plan-hero-inner">
+    <p class="plan-breadcrumb">Carreras &rsaquo; <span>Logistica</span></p>
+    <h2 class="plan-hero-title">Tecnicatura Superior<br>en Logistica</h2>
+    <p class="plan-hero-subtitle">Formacion tecnico-profesional para la planificacion, gestion y control de cadenas de suministro y distribucion.</p>
+    <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 anos</div>
+  </div></div>
   <div class="plan-stats">
-    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Años</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Anos</div></div>
     <div class="plan-stat"><div class="plan-stat-num">6</div><div class="plan-stat-label">Cuatrimestres</div></div>
     <div class="plan-stat"><div class="plan-stat-num">27</div><div class="plan-stat-label">Materias</div></div>
-    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Prácticas profesionalizantes</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Practicas</div></div>
   </div>
-
-  <div class="plan-body">
-    <div class="plan-body-inner">
-      <div class="plan-leyenda">
-        <span class="plan-leyenda-label">Referencia</span>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div>
-      </div>
-      <div class="plan-progress-track">
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 1</span><h3 class="plan-year-title">Primer Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Inglés Técnico</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Principios de Administración</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Relación Estado – Sociedad</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Cultura y Comunicación Contemporánea</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Estadística</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Física Aplicada</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante I</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Distribución I</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Economía</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Informática Aplicada</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 2</span><h3 class="plan-year-title">Segundo Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Identidad y Desigualdad Sociocultural</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Legislación</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Sociología de las Organizaciones</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Calidad de la Producción y el Servicio</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Metodología de la Investigación de las Ciencias Sociales</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Portugués Técnico</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Distribución II</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Logística I</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante II</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 3</span><h3 class="plan-year-title">Tercer Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Administración Financiera</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Matemática</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Seguridad e Higiene</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Derecho Civil y Comercial</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Ética Profesional</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Régimen Tributario</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Logística II</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante III</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Procesos Políticos Económicos y el Mundo del Trabajo Actual</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <div class="plan-body"><div class="plan-body-inner">
+    <div class="plan-leyenda"><span class="plan-leyenda-label">Referencia</span><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1. Cuatrimestre</div><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2. Cuatrimestre</div><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div></div>
+    <div class="plan-progress-track">
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 1</span><h3 class="plan-year-title">Primer Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Ingles Tecnico</li><li class="plan-materia-item"><span class="plan-dot"></span>Principios de Administracion</li><li class="plan-materia-item"><span class="plan-dot"></span>Relacion Estado - Sociedad</li></ul></div><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Cultura y Comunicacion Contemporanea</li><li class="plan-materia-item"><span class="plan-dot"></span>Estadistica</li><li class="plan-materia-item"><span class="plan-dot"></span>Fisica Aplicada</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante I</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Distribucion I</li><li class="plan-materia-item"><span class="plan-dot"></span>Economia</li><li class="plan-materia-item"><span class="plan-dot"></span>Informatica Aplicada</li></ul></div></div></div>
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 2</span><h3 class="plan-year-title">Segundo Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Identidad y Desigualdad Sociocultural</li><li class="plan-materia-item"><span class="plan-dot"></span>Legislacion</li><li class="plan-materia-item"><span class="plan-dot"></span>Sociologia de las Organizaciones</li></ul></div><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Calidad de la Produccion y el Servicio</li><li class="plan-materia-item"><span class="plan-dot"></span>Metodologia de la Investigacion</li><li class="plan-materia-item"><span class="plan-dot"></span>Portugues Tecnico</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Distribucion II</li><li class="plan-materia-item"><span class="plan-dot"></span>Logistica I</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante II</li></ul></div></div></div>
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 3</span><h3 class="plan-year-title">Tercer Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Administracion Financiera</li><li class="plan-materia-item"><span class="plan-dot"></span>Matematica</li><li class="plan-materia-item"><span class="plan-dot"></span>Seguridad e Higiene</li></ul></div><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Derecho Civil y Comercial</li><li class="plan-materia-item"><span class="plan-dot"></span>Etica Profesional</li><li class="plan-materia-item"><span class="plan-dot"></span>Regimen Tributario</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Logistica II</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante III</li><li class="plan-materia-item"><span class="plan-dot"></span>Procesos Politicos Economicos y el Mundo del Trabajo Actual</li></ul></div></div></div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     PLAN — MECATRÓNICA
-════════════════════════════════════════ -->
+<!-- PLAN MECATRONICA -->
 <section id="plan-mecatronica" class="plan-section">
-
-  <div class="plan-hero hero-mecatronica">
-    <div class="plan-hero-inner">
-      <p class="plan-breadcrumb">Carreras &rsaquo; <span>Mecatrónica</span></p>
-      <h2 class="plan-hero-title">Tecnicatura Superior<br>en Mecatrónica</h2>
-      <p class="plan-hero-subtitle">Formación en sistemas integrados de mecánica, electrónica, programación, automatización y robótica industrial.</p>
-      <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 años</div>
-    </div>
-  </div>
-
+  <div class="plan-hero hero-mecatronica"><div class="plan-hero-inner">
+    <p class="plan-breadcrumb">Carreras &rsaquo; <span>Mecatronica</span></p>
+    <h2 class="plan-hero-title">Tecnicatura Superior<br>en Mecatronica</h2>
+    <p class="plan-hero-subtitle">Formacion en sistemas integrados de mecanica, electronica, programacion, automatizacion y robotica industrial.</p>
+    <div class="plan-hero-badge">Plan de estudios vigente &mdash; 3 anos</div>
+  </div></div>
   <div class="plan-stats">
-    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Años</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Anos</div></div>
     <div class="plan-stat"><div class="plan-stat-num">6</div><div class="plan-stat-label">Cuatrimestres</div></div>
     <div class="plan-stat"><div class="plan-stat-num">29</div><div class="plan-stat-label">Materias</div></div>
-    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Prácticas profesionalizantes</div></div>
+    <div class="plan-stat"><div class="plan-stat-num">3</div><div class="plan-stat-label">Practicas</div></div>
   </div>
-
-  <div class="plan-body">
-    <div class="plan-body-inner">
-      <div class="plan-leyenda">
-        <span class="plan-leyenda-label">Referencia</span>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2.° Cuatrimestre</div>
-        <div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div>
-      </div>
-      <div class="plan-progress-track">
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 1</span><h3 class="plan-year-title">Primer Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Ciencia, Tecnología y Sociedad</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Ofimática</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Electricidad y Electrónica Analógica</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Laboratorio de Programación I</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante en Mecatrónica I</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Sistemas de Representación</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Informática</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Inglés Técnico</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Matemática y Estadística</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 2</span><h3 class="plan-year-title">Segundo Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Cultura y Comunicación Contemporánea</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Electrónica Digital</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Inglés Técnico II</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Servomecanismos</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">4 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Laboratorio de Programación II</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Mecánica</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Operación, Montaje y Mantenimiento de Equipos e Instalaciones Electromecánicas</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante en Mecatrónica II</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="plan-year" data-scroll-reveal>
-          <div class="plan-year-dot"></div>
-          <div class="plan-year-header"><span class="plan-year-badge">Año 3</span><h3 class="plan-year-title">Tercer Año</h3><div class="plan-year-line"></div></div>
-          <div class="plan-grid">
-            <div class="plan-card tipo-1c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1.° Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Mantenimiento y Seguridad Industrial</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Procesos Políticos, Económicos y el Mundo del Trabajo: Emprendedorismo</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-2c">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2.° Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Automatización Industrial</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Deontología Profesional</li>
-              </ul>
-            </div>
-            <div class="plan-card tipo-anual">
-              <div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">4 materias</div></div></div>
-              <ul class="plan-materia-list">
-                <li class="plan-materia-item"><span class="plan-dot"></span>Diseño e Impresión 3D</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Montaje, Instalación y Mantenimiento de Equipos de Electrónica Industrial</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Práctica Profesionalizante en Mecatrónica III</li>
-                <li class="plan-materia-item"><span class="plan-dot"></span>Robótica e Inteligencia Artificial</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <div class="plan-body"><div class="plan-body-inner">
+    <div class="plan-leyenda"><span class="plan-leyenda-label">Referencia</span><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-1c"></span>1. Cuatrimestre</div><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-2c"></span>2. Cuatrimestre</div><div class="plan-leyenda-item"><span class="leyenda-dot leyenda-anual"></span>Anual</div></div>
+    <div class="plan-progress-track">
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 1</span><h3 class="plan-year-title">Primer Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Ciencia, Tecnologia y Sociedad</li><li class="plan-materia-item"><span class="plan-dot"></span>Ofimatica</li></ul></div><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Electricidad y Electronica Analogica</li><li class="plan-materia-item"><span class="plan-dot"></span>Laboratorio de Programacion I</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante en Mecatronica I</li><li class="plan-materia-item"><span class="plan-dot"></span>Sistemas de Representacion</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">3 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Informatica</li><li class="plan-materia-item"><span class="plan-dot"></span>Ingles Tecnico</li><li class="plan-materia-item"><span class="plan-dot"></span>Matematica y Estadistica</li></ul></div></div></div>
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 2</span><h3 class="plan-year-title">Segundo Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Cultura y Comunicacion Contemporanea</li><li class="plan-materia-item"><span class="plan-dot"></span>Electronica Digital</li><li class="plan-materia-item"><span class="plan-dot"></span>Ingles Tecnico II</li><li class="plan-materia-item"><span class="plan-dot"></span>Servomecanismos</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Laboratorio de Programacion II</li><li class="plan-materia-item"><span class="plan-dot"></span>Mecanica</li><li class="plan-materia-item"><span class="plan-dot"></span>Operacion, Montaje y Mantenimiento de Equipos Electromecanicos</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante en Mecatronica II</li></ul></div></div></div>
+      <div class="plan-year" data-scroll-reveal><div class="plan-year-dot"></div><div class="plan-year-header"><span class="plan-year-badge">Ano 3</span><h3 class="plan-year-title">Tercer Ano</h3><div class="plan-year-line"></div></div><div class="plan-grid"><div class="plan-card tipo-1c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">1. Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Mantenimiento y Seguridad Industrial</li><li class="plan-materia-item"><span class="plan-dot"></span>Procesos Politicos, Economicos y Emprendedorismo</li></ul></div><div class="plan-card tipo-2c"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div><div class="plan-card-tag">2. Cuatrimestre</div><div class="plan-card-count">2 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Automatizacion Industrial</li><li class="plan-materia-item"><span class="plan-dot"></span>Deontologia Profesional</li></ul></div><div class="plan-card tipo-anual"><div class="plan-card-header"><div class="plan-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="plan-card-tag">Anual</div><div class="plan-card-count">4 materias</div></div></div><ul class="plan-materia-list"><li class="plan-materia-item"><span class="plan-dot"></span>Diseno e Impresion 3D</li><li class="plan-materia-item"><span class="plan-dot"></span>Montaje, Instalacion y Mantenimiento de Equipos de Electronica Industrial</li><li class="plan-materia-item"><span class="plan-dot"></span>Practica Profesionalizante en Mecatronica III</li><li class="plan-materia-item"><span class="plan-dot"></span>Robotica e Inteligencia Artificial</li></ul></div></div></div>
     </div>
-  </div>
+  </div></div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     BIBLIOTECA
-════════════════════════════════════════ -->
+<!-- BIBLIOTECA -->
 <section id="biblioteca">
-
-  <!-- Header de la sección -->
-  <div class="bib-header">
-    <div class="bib-header-inner">
-      <p class="bib-eyebrow">Recursos académicos</p>
-      <h2 class="bib-title">Biblioteca <em>Digital</em></h2>
-      <p class="bib-subtitle">Material de estudio organizado por carrera. Seleccioná tu carrera y accedé directamente al Drive del centro.</p>
-    </div>
-  </div>
-
-  <!-- Tabs de carrera -->
+  <div class="bib-header"><div class="bib-header-inner">
+    <p class="bib-eyebrow">Recursos academicos</p>
+    <h2 class="bib-title">Biblioteca <em>Digital</em></h2>
+    <p class="bib-subtitle">Material de estudio organizado por carrera. Selecciona tu carrera y accede directamente al Drive del centro.</p>
+  </div></div>
   <div class="bib-body">
     <div class="bib-tabs" role="tablist">
-      <button class="bib-tab active" data-tab="hys" role="tab" aria-selected="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>Higiene y Seguridad</span>
-        <span class="bib-tab-count" id="count-hys">–</span>
-      </button>
-      <button class="bib-tab" data-tab="log" role="tab" aria-selected="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span>Logística</span>
-        <span class="bib-tab-count" id="count-log">–</span>
-      </button>
-      <button class="bib-tab" data-tab="mec" role="tab" aria-selected="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg>
-        <span>Mecatrónica</span>
-        <span class="bib-tab-count" id="count-mec">–</span>
-      </button>
+      <button class="bib-tab active" data-tab="hys" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Higiene y Seguridad</span><span class="bib-tab-count" id="count-hys">1 Drive</span></button>
+      <button class="bib-tab" data-tab="log" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><span>Logistica</span><span class="bib-tab-count" id="count-log">1 Drive</span></button>
+      <button class="bib-tab" data-tab="mec" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 1 0 4.93 19.07 10 10 0 0 0 19.07 4.93z"/></svg><span>Mecatronica</span><span class="bib-tab-count" id="count-mec">1 Drive</span></button>
     </div>
-
-    <!-- Paneles -->
     <div class="bib-panels">
-    <div class="bib-panels">
-
-      <!-- ── HIGIENE Y SEGURIDAD ── -->
-      <div class="bib-panel active" id="bib-hys">
-        <div class="bib-drive-card hys">
-          <div class="bib-drive-icon">
-            <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-          </div>
-          <div class="bib-drive-body">
-            <p class="bib-drive-label">Google Drive</p>
-            <h3 class="bib-drive-title">Higiene y Seguridad en el Trabajo</h3>
-            <p class="bib-drive-desc">Accedé a todos los apuntes, guías, normativas y material de estudio de la carrera organizados por año y materia.</p>
-          </div>
-          <a href="#" class="bib-drive-btn hys" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Abrir Drive
-          </a>
-        </div>
-      </div><!-- /bib-hys -->
-
-      <!-- ── LOGÍSTICA ── -->
-      <div class="bib-panel" id="bib-log">
-        <div class="bib-drive-card log">
-          <div class="bib-drive-icon">
-            <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-          </div>
-          <div class="bib-drive-body">
-            <p class="bib-drive-label">Google Drive</p>
-            <h3 class="bib-drive-title">Logística</h3>
-            <p class="bib-drive-desc">Accedé a todos los apuntes, guías y material de estudio de la carrera organizados por año y materia.</p>
-          </div>
-          <a href="#" class="bib-drive-btn log" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Abrir Drive
-          </a>
-        </div>
-      </div><!-- /bib-log -->
-
-      <!-- ── MECATRÓNICA ── -->
-      <div class="bib-panel" id="bib-mec">
-        <div class="bib-drive-card mec">
-          <div class="bib-drive-icon">
-            <svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg>
-          </div>
-          <div class="bib-drive-body">
-            <p class="bib-drive-label">Google Drive</p>
-            <h3 class="bib-drive-title">Mecatrónica</h3>
-            <p class="bib-drive-desc">Accedé a todos los apuntes, guías y material de estudio de la carrera organizados por año y materia.</p>
-          </div>
-          <a href="#" class="bib-drive-btn mec" target="_blank" rel="noopener">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-            Abrir Drive
-          </a>
-        </div>
-      </div><!-- /bib-mec -->
-
-    </div><!-- /bib-panels -->
-  </div><!-- /bib-body -->
+      <div class="bib-panel active" id="bib-hys"><div class="bib-drive-card hys"><div class="bib-drive-icon"><svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.5l5.85 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg></div><div class="bib-drive-body"><p class="bib-drive-label">Google Drive</p><h3 class="bib-drive-title">Higiene y Seguridad en el Trabajo</h3><p class="bib-drive-desc">Accede a todos los apuntes, guias, normativas y material de estudio de la carrera organizados por ano y materia.</p></div><a href="#" class="bib-drive-btn hys" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Abrir Drive</a></div></div>
+      <div class="bib-panel" id="bib-log"><div class="bib-drive-card log"><div class="bib-drive-icon"><svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.5l5.85 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg></div><div class="bib-drive-body"><p class="bib-drive-label">Google Drive</p><h3 class="bib-drive-title">Logistica</h3><p class="bib-drive-desc">Accede a todos los apuntes, guias y material de estudio de la carrera organizados por ano y materia.</p></div><a href="#" class="bib-drive-btn log" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Abrir Drive</a></div></div>
+      <div class="bib-panel" id="bib-mec"><div class="bib-drive-card mec"><div class="bib-drive-icon"><svg viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg"><path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/><path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z" fill="#00ac47"/><path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.5l5.85 11.5z" fill="#ea4335"/><path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/><path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/><path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/></svg></div><div class="bib-drive-body"><p class="bib-drive-label">Google Drive</p><h3 class="bib-drive-title">Mecatronica</h3><p class="bib-drive-desc">Accede a todos los apuntes, guias y material de estudio de la carrera organizados por ano y materia.</p></div><a href="#" class="bib-drive-btn mec" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Abrir Drive</a></div></div>
+    </div>
+  </div>
 </section>
-
 
 <!-- EQUIPO -->
 <section id="equipo">
-  <div class="equipo-header">
-    <p class="equipo-eyebrow">CEUTESIM 2026</p>
-    <h2 class="equipo-title">Nuestro <span>Equipo</span></h2>
-    <p class="equipo-subtitle">Autoridades y representantes estudiantiles</p>
-  </div>
-
+  <div class="equipo-header"><p class="equipo-eyebrow">CEUTESIM 2026</p><h2 class="equipo-title">Nuestro <span>Equipo</span></h2><p class="equipo-subtitle">Autoridades y representantes estudiantiles</p></div>
   <div class="equipo-grid">
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-presidente">Presidente</div>
-      <div class="miembro-nombre">Natalia Soledad Vallejos</div>
-      <div class="miembro-num">01</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría General</div>
-      <div class="miembro-nombre">Hernán Romero</div>
-      <div class="miembro-num">02</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Actas</div>
-      <div class="miembro-nombre">Ramón Esteban Gonzales</div>
-      <div class="miembro-num">03</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Finanzas</div>
-      <div class="miembro-nombre">Victor Vasconcel</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Brisa Romero<span class="suplente-tag">(Supl.)</span></div>
-      </div>
-      <div class="miembro-num">04</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Prensa y Difusión</div>
-      <div class="miembro-nombre">Augusto Matías Coronel</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Jimena Samudio<span class="suplente-tag">(Supl.)</span></div>
-      </div>
-      <div class="miembro-num">05</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Cultura y Recreación</div>
-      <div class="miembro-nombre">Juan Bautista Coronel</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Ludmila Ayelén Castillo<span class="suplente-tag">(Supl.)</span></div>
-        <div class="suplente-item">Facundo Sánchez<span class="suplente-tag">(Supl.)</span></div>
-        <div class="suplente-item">Katherina Ileana Montejano<span class="suplente-tag">(Supl.)</span></div>
-      </div>
-      <div class="miembro-num">06</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Investigación y Bibliografía</div>
-      <div class="miembro-nombre">Oscar Teetz Almirón Jacinto</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Bruno López<span class="suplente-tag">(Supl.)</span></div>
-      </div>
-      <div class="miembro-num">07</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-secretaria">Secretaría de Alumnado y Derecho Humano</div>
-      <div class="miembro-nombre">Marcos Sebastián Meza</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Florencia Gómez<span class="suplente-tag">(Supl.)</span></div>
-      </div>
-      <div class="miembro-num">08</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-consejera">Consejera Estudiantil</div>
-      <div class="miembro-nombre">Viviana Gómez</div>
-      <div class="miembro-num">09</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-vocero">Vocería · Higiene y Seguridad</div>
-      <div class="miembro-nombre">Melisa Meza</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">García Gisela Itatí</div>
-        <div class="suplente-item">Gauna Walter Héctor R.</div>
-      </div>
-      <div class="miembro-num">10</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-vocero">Vocería · Logística</div>
-      <div class="miembro-nombre">Marcelo Adrián Fernández</div>
-      <div class="suplentes-list">
-        <div class="suplente-item">Benjamín Sosa</div>
-      </div>
-      <div class="miembro-num">11</div>
-    </div>
-
-    <div class="miembro-card">
-      <div class="miembro-rol tipo-vocero">Vocería · Mecatrónica</div>
-      <div class="miembro-nombre">Milva Zárate</div>
-      <div class="miembro-num">12</div>
-    </div>
-
+    <div class="miembro-card"><div class="miembro-rol tipo-presidente">Presidente</div><div class="miembro-nombre">Natalia Soledad Vallejos</div><div class="miembro-num">01</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria General</div><div class="miembro-nombre">Hernan Romero</div><div class="miembro-num">02</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Actas</div><div class="miembro-nombre">Ramon Esteban Gonzales</div><div class="miembro-num">03</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Finanzas</div><div class="miembro-nombre">Victor Vasconcel</div><div class="suplentes-list"><div class="suplente-item">Brisa Romero<span class="suplente-tag">(Supl.)</span></div></div><div class="miembro-num">04</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Prensa y Difusion</div><div class="miembro-nombre">Augusto Matias Coronel</div><div class="suplentes-list"><div class="suplente-item">Jimena Samudio<span class="suplente-tag">(Supl.)</span></div></div><div class="miembro-num">05</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Cultura y Recreacion</div><div class="miembro-nombre">Juan Bautista Coronel</div><div class="suplentes-list"><div class="suplente-item">Ludmila Ayelen Castillo<span class="suplente-tag">(Supl.)</span></div><div class="suplente-item">Facundo Sanchez<span class="suplente-tag">(Supl.)</span></div><div class="suplente-item">Katherina Ileana Montejano<span class="suplente-tag">(Supl.)</span></div></div><div class="miembro-num">06</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Investigacion y Bibliografia</div><div class="miembro-nombre">Oscar Teetz Almiron Jacinto</div><div class="suplentes-list"><div class="suplente-item">Bruno Lopez<span class="suplente-tag">(Supl.)</span></div></div><div class="miembro-num">07</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-secretaria">Secretaria de Alumnado y Derecho Humano</div><div class="miembro-nombre">Marcos Sebastian Meza</div><div class="suplentes-list"><div class="suplente-item">Florencia Gomez<span class="suplente-tag">(Supl.)</span></div></div><div class="miembro-num">08</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-consejera">Consejera Estudiantil</div><div class="miembro-nombre">Viviana Gomez</div><div class="miembro-num">09</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-vocero">Voceria - Higiene y Seguridad</div><div class="miembro-nombre">Melisa Meza</div><div class="suplentes-list"><div class="suplente-item">Garcia Gisela Itati</div><div class="suplente-item">Gauna Walter Hector R.</div></div><div class="miembro-num">10</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-vocero">Voceria - Logistica</div><div class="miembro-nombre">Marcelo Adrian Fernandez</div><div class="suplentes-list"><div class="suplente-item">Benjamin Sosa</div></div><div class="miembro-num">11</div></div>
+    <div class="miembro-card"><div class="miembro-rol tipo-vocero">Voceria - Mecatronica</div><div class="miembro-nombre">Milva Zarate</div><div class="miembro-num">12</div></div>
   </div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     SOPORTE
-════════════════════════════════════════ -->
+<!-- SOPORTE -->
 <section id="soporte" class="reveal">
   <div class="container">
     <p class="section-label">Contacto</p>
-    <h2 class="section-title">¿Tenés <span>dudas</span>?</h2>
-    <p>Estamos para ayudarte. Comunicate con el centro estudiantil a través de nuestras redes sociales.</p>
+    <h2 class="section-title">Tenes <span>dudas</span>?</h2>
+    <p>Estamos para ayudarte. Comunicate con el centro estudiantil a traves de nuestras redes sociales.</p>
   </div>
 </section>
 
-
-<!-- ════════════════════════════════════════
-     FOOTER
-════════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-brand-name">CEUTESIM</div>
-  <p class="footer-tagline">Centro Estudiantil · Unificación Tecnicatura Superior Islas Malvinas</p>
-
+  <p class="footer-tagline">Centro Estudiantil - Unificacion Tecnicatura Superior Islas Malvinas</p>
   <div class="footer-divider"></div>
   <p class="footer-redes-label">Seguinos en redes</p>
-
   <div class="social-icons">
-    <a href="https://www.instagram.com/ceutesim" class="si-instagram" title="Instagram" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-    </a>
-    <a href="https://www.facebook.com/people/%F0%9D%97%96%F0%9D%97%98%F0%9D%97%A8%F0%9D%97%A7%F0%9D%97%98%F0%9D%97%A6%F0%9D%97%9C%F0%9D%97%A0/61573610294557/" class="si-facebook" title="Facebook" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-    </a>
-    <a href="#" class="si-whatsapp" title="WhatsApp" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    </a>
-    <a href="#" class="si-tiktok" title="TikTok" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-    </a>
-    <a href="#" class="si-youtube" title="YouTube" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-    </a>
+    <a href="https://www.instagram.com/ceutesim" class="si-instagram" title="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+    <a href="https://www.facebook.com/people/CEUTESIM/61573610294557/" class="si-facebook" title="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a href="#" class="si-whatsapp" title="WhatsApp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+    <a href="#" class="si-tiktok" title="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+    <a href="#" class="si-youtube" title="YouTube" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
   </div>
-
-  <div class="footer-copy">
-    &copy; 2026 <strong>CEUTESIM</strong> &mdash; Todos los derechos reservados
-  </div>
+  <div class="footer-copy">&copy; 2026 <strong>CEUTESIM</strong> &mdash; Todos los derechos reservados</div>
 </footer>
 
 <script src="script.js"></script>
