@@ -3,8 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CEUTESIM — Centro Estudiantil</title>
+  <title>CEUTESIM</title>
   <link rel="icon" type="image/png" href="Logo.png">
+
+  <!-- ══ SEGURIDAD: Meta HTTP headers ══ -->
+  <!-- Evita que la página sea embebida en un iframe (clickjacking) -->
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <!-- Evita que el navegador adivine el tipo de contenido (MIME sniffing) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- Controla qué información se envía en el header Referer -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <!-- Fuerza HTTPS en el navegador por 1 año -->
+  <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
+  <!-- Política de permisos: desactiva funciones que no se usan -->
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()">
+  <!-- Content Security Policy: solo permite recursos del propio dominio + Google Fonts -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src  'self';
+    style-src   'self' https://fonts.googleapis.com 'unsafe-inline';
+    font-src    'self' https://fonts.gstatic.com;
+    img-src     'self' data:;
+    connect-src 'self';
+    frame-src   'none';
+    object-src  'none';
+    base-uri    'self';
+    form-action 'self';
+  ">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -54,8 +80,8 @@
 <section id="inicio">
   <div class="hero-inner">
     <p class="hero-eyebrow">CEUTESIM 2026</p>
-    <h1 class="hero-title">Excelencia<br><em>Académica</em> Técnica</h1>
-    <p class="hero-subtitle">Formación profesional superior con visión institucional, compromiso estudiantil y proyección hacia el futuro.</p>
+    <h1 class="hero-title">Tu voz,<br>tu <em>centro</em></h1>
+    <p class="hero-subtitle">Representamos a los estudiantes de las Tecnicaturas Superiores Islas Malvinas. Organizamos, gestionamos y te acompañamos.</p>
     <a href="#carreras" class="hero-cta">
       Explorar carreras
       <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -599,7 +625,7 @@
             <h3 class="bib-drive-title">Higiene y Seguridad en el Trabajo</h3>
             <p class="bib-drive-desc">Accedé a todos los apuntes, guías, normativas y material de estudio de la carrera organizados por año y materia.</p>
           </div>
-          <a href="https://drive.google.com/drive/u/2/folders/1rn5wtTKQ6LlpAw8YKiHv5jLxZtrTs7fv" class="bib-drive-btn hys" target="_blank" rel="noopener">
+          <a href="#" class="bib-drive-btn hys" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Abrir Drive
           </a>
@@ -617,7 +643,7 @@
             <h3 class="bib-drive-title">Logística</h3>
             <p class="bib-drive-desc">Accedé a todos los apuntes, guías y material de estudio de la carrera organizados por año y materia.</p>
           </div>
-          <a href="https://drive.google.com/drive/u/2/folders/1XT2UyyvEnQJZxNMGXxIgLj3Dccdcqutt" class="bib-drive-btn log" target="_blank" rel="noopener">
+          <a href="#" class="bib-drive-btn log" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Abrir Drive
           </a>
@@ -635,7 +661,7 @@
             <h3 class="bib-drive-title">Mecatrónica</h3>
             <p class="bib-drive-desc">Accedé a todos los apuntes, guías y material de estudio de la carrera organizados por año y materia.</p>
           </div>
-          <a href="https://drive.google.com/drive/u/2/folders/1LPPCznl2YbEO6koB5zFETb2eReUfUJn7" class="bib-drive-btn mec" target="_blank" rel="noopener">
+          <a href="#" class="bib-drive-btn mec" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             Abrir Drive
           </a>
