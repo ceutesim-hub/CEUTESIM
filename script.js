@@ -138,7 +138,9 @@
       'plan-mecatronica':1,
       'biblioteca':      2,
       'equipo':          3,
-      'soporte':         4,
+      'quienes-somos':   4,
+      'galeria':         5,
+      'soporte':         6,
     };
 
     const idx = map[currentId];
@@ -217,5 +219,24 @@
   }, { threshold: 0.12 });
 
   revealEls.forEach(el => revealObs.observe(el));
+
+  /* ── Galeria filtros ── */
+  const filtros   = document.querySelectorAll('.gal-filtro');
+  const galItems  = document.querySelectorAll('.gal-item');
+
+  filtros.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filtros.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      galItems.forEach(item => {
+        if (filter === 'all' || item.dataset.cat === filter) {
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+    });
+  });
 
 })();
